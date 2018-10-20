@@ -9,7 +9,7 @@
 * Utilisateur
 * Score
 
-## Liens
+## Liens entre entités
 
 * 1 quiz est composé de questions
 * 1 quiz porte sur un anime
@@ -22,3 +22,9 @@
 * 1 utilisateur saisit une seule réponse par question
 * 1 utilisateur obtient un score par quiz
 * 1 utilisateur a une liste de scores par quiz
+
+## Entité Quiz
+
+- quiz
+    - id (PK)
+    - label
