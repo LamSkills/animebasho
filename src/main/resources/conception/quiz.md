@@ -28,3 +28,8 @@
 - quiz
     - id (PK)
     - label
+    
+- question
+    - id (PK)
+    - quiz_id (FK)
+    - label

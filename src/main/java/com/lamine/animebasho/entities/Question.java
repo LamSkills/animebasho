@@ -1,20 +1,18 @@
 package com.lamine.animebasho.entities;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-public class Quiz {
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public Long id;
 
-    @Column(name = "label")
-    private String label;
+    public String label;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
-    private Set<Question> questions;
+    @ManyToOne(cascade = CascadeType.ALL)
+    public Quiz quiz;
 
     public Long getId() {
         return id;
@@ -32,20 +30,19 @@ public class Quiz {
         this.label = label;
     }
 
-    public Set<Question> getQuestions() {
-        return questions;
+    public Quiz getQuiz() {
+        return quiz;
     }
 
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 
     @Override
     public String toString() {
-        return "Quiz{" +
+        return "Question{" +
                 "id=" + id +
                 ", label='" + label + '\'' +
                 '}';
     }
-
 }
