@@ -39,3 +39,10 @@
     - question_id (FK)
     - label
     - is_correct
+    
+- utilisateur
+    - id (PK)
+    - nom
+    - prenom
+    - email
+    - password
