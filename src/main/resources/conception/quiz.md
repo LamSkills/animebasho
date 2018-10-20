@@ -33,3 +33,9 @@
     - id (PK)
     - quiz_id (FK)
     - label
+    
+-proposition
+    - id (PK)
+    - question_id (FK)
+    - label
+    - is_correct
