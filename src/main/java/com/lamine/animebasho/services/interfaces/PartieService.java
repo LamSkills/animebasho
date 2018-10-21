@@ -12,7 +12,7 @@ public interface PartieService {
 
     @ApiOperation(httpMethod = "GET", value = "Retourne la partie jouée par un utilisateur")
     @GetMapping(value = "/parties/{partieId}")
-    Partie retournerPartie(@PathVariable(value = "partieId") Long partieId);
+    Partie retournerPartie(Long partieId);
 
     @ApiOperation(httpMethod = "POST", value = "Enregistre une partie d'un utilisateur")
     @PostMapping(value = "/parties")
