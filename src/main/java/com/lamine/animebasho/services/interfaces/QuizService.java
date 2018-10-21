@@ -20,5 +20,5 @@ public interface QuizService {
      */
     @ApiOperation(httpMethod = "GET", value = "Retourne la liste des quizzes")
     @GetMapping(value = "/quizzes")
-    public Set<Quiz> getQuizzes();
+    Set<Quiz> getQuizzes();
 }
