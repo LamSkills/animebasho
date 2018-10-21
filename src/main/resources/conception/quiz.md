@@ -7,7 +7,7 @@
 * Proposition
 * Réponse
 * Utilisateur
-* Score
+* Partie
 
 ## Liens entre entités
 
