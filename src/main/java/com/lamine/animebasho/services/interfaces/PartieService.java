@@ -4,6 +4,7 @@ import com.lamine.animebasho.dto.PartieDto;
 import com.lamine.animebasho.entities.Partie;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Api(value = "Partie", description = "Service de gestion des parties de l'utilisateur", tags = { "Partie" })
@@ -16,6 +17,6 @@ public interface PartieService {
 
     @ApiOperation(httpMethod = "POST", value = "Enregistre une partie d'un utilisateur")
     @PostMapping(value = "/parties")
-    void enregistrerPartie(@RequestBody PartieDto partieDto);
+    ResponseEntity enregistrerPartie(@RequestBody PartieDto partieDto);
 
 }
