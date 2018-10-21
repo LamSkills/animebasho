@@ -21,6 +21,7 @@
 * 1 utilisateur saisit une liste de réponses par partie de quiz
 * 1 utilisateur saisit une seule réponse par question
 * 1 utilisateur obtient un score par partie de quiz jouée
+* 1 partie contient une liste de réponses de l'utilisateur
 
 ## Modèle Conceptuel de Données
 
@@ -33,7 +34,7 @@
     - quiz_id (FK)
     - label
     
--proposition
+- proposition
     - id (PK)
     - question_id (FK)
     - label
@@ -55,3 +56,12 @@
 - reponse
     - partie_id (PK + FK)
     - proposition_id (PK + FK)
+    
+## REST API
+
+### CRUD Quiz
+
+* GET : retourne un quiz avec ses questions et propositions
+* POST : crée un quiz avec ses questions et propositions
+* PUT : modifie le nom du quiz
+* DELETE : supprime le quiz avec ses questions et propositions en cascade
