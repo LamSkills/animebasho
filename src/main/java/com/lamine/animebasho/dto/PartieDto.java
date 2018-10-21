@@ -1,12 +1,12 @@
 package com.lamine.animebasho.dto;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class PartieDto {
 
     private String userId;
     private String quizId;
-    private String[] reponses;
+    private List<String> reponses;
 
     public String getUserId() {
         return userId;
@@ -24,11 +24,11 @@ public class PartieDto {
         this.quizId = quizId;
     }
 
-    public String[] getReponses() {
+    public List<String> getReponses() {
         return reponses;
     }
 
-    public void setReponses(String[] reponses) {
+    public void setReponses(List<String> reponses) {
         this.reponses = reponses;
     }
 
@@ -37,7 +37,7 @@ public class PartieDto {
         return "PartieDto{" +
                 "userId='" + userId + '\'' +
                 ", quizId='" + quizId + '\'' +
-                ", reponses=" + Arrays.toString(reponses) +
+                ", reponses=" + reponses +
                 '}';
     }
 }
