@@ -41,10 +41,10 @@ public class QuizDaoTest {
         Set<Quiz> results = quizDao.findQuizzes();
 
         // Then
-        for (Quiz result : results) {
+        results.stream().forEach(result -> {
             Assert.assertEquals(this.quiz.getLabel(), result.getLabel());
             Assert.assertEquals(this.quiz.getQuestions(), result.getQuestions());
-        }
+        });
 
     }
 
