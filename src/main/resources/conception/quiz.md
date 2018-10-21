@@ -17,13 +17,12 @@
 * 1 question a une seule proposition correcte
 * 1 proposition est utilisée par une seule question
 * 1 proposition peut être correcte ou non
-* 1 utilisateur joue à une liste de quiz
-* 1 utilisateur saisit une liste de réponses par quiz
+* 1 utilisateur joue à une partie de quiz
+* 1 utilisateur saisit une liste de réponses par partie de quiz
 * 1 utilisateur saisit une seule réponse par question
-* 1 utilisateur obtient un score par quiz
-* 1 utilisateur a une liste de scores par quiz
+* 1 utilisateur obtient un score par partie de quiz jouée
 
-## Entité Quiz
+## Modèle Conceptuel de Données
 
 - quiz
     - id (PK)
@@ -46,3 +45,13 @@
     - prenom
     - email
     - password
+    
+- partie
+    - id (PK)
+    - quiz_id (FK)
+    - utilisateur_id (FK)
+    - score
+    
+- reponse
+    - partie_id (PK + FK)
+    - proposition_id (PK + FK)
