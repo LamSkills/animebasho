@@ -1,6 +1,9 @@
 package com.lamine.animebasho.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,11 +21,18 @@ public class Partie {
     @JoinColumn(name = "utilisateur_id")
     private Utilisateur utilisateur;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "partie", cascade = CascadeType.ALL)
     private Set<Reponse> reponses;
 
     @Column(name = "score")
     private String score;
+
+    public Partie() {
+        if (reponses == null) {
+            this.reponses = new HashSet<>();
+        }
+    }
 
     public Long getId() {
         return id;
@@ -70,6 +80,7 @@ public class Partie {
                 "id=" + id +
                 ", quiz=" + quiz +
                 ", utilisateur=" + utilisateur +
+                ", reponses=" + reponses +
                 ", score='" + score + '\'' +
                 '}';
     }

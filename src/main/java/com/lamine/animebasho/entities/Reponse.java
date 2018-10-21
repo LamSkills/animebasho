@@ -1,5 +1,7 @@
 package com.lamine.animebasho.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,13 +13,17 @@ public class Reponse {
     @EmbeddedId
     private ReponseId id;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "fk_partie_id", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_partie_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Partie partie;
 
     @ManyToOne
     @JoinColumn(name = "fk_proposition_id", insertable = false, updatable = false)
     private Proposition proposition;
+
+    public Reponse() {
+    }
 
     /**
      * Constructeur de la réponse de l'utilisateur à une partie.
@@ -35,6 +41,13 @@ public class Reponse {
         partie.getReponses().add(this);
     }
 
+    @Override
+    public String toString() {
+        return "Reponse{" +
+                "id=" + id +
+                '}';
+    }
+
     @Embeddable
     public static class ReponseId implements Serializable {
 
@@ -43,6 +56,9 @@ public class Reponse {
 
         @Column(name = "fk_proposition_id")
         protected Long propositionId;
+
+        public ReponseId() {
+        }
 
         public ReponseId(Long partieId, Long propositionId) {
             this.partieId = partieId;
@@ -61,6 +77,14 @@ public class Reponse {
         @Override
         public int hashCode() {
             return Objects.hash(partieId, propositionId);
+        }
+
+        @Override
+        public String toString() {
+            return "ReponseId{" +
+                    "partieId=" + partieId +
+                    ", propositionId=" + propositionId +
+                    '}';
         }
     }
 }
