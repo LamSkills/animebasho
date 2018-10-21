@@ -1,5 +1,8 @@
 package com.lamine.animebasho.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -14,9 +17,11 @@ public class Question {
     @Column(name = "label")
     private String label;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     private Quiz quiz;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private Set<Proposition> propositions;
 
@@ -44,20 +49,26 @@ public class Question {
         this.quiz = quiz;
     }
 
+    public Set<Proposition> getPropositions() {
+        return propositions;
+    }
+
+    public void setPropositions(Set<Proposition> propositions) {
+        this.propositions = propositions;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
         return Objects.equals(id, question.id) &&
-                Objects.equals(label, question.label) &&
-                Objects.equals(quiz, question.quiz) &&
-                Objects.equals(propositions, question.propositions);
+                Objects.equals(label, question.label);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, label, quiz, propositions);
+        return Objects.hash(id, label);
     }
 
     @Override

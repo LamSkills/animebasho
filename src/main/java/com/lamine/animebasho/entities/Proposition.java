@@ -1,5 +1,7 @@
 package com.lamine.animebasho.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Proposition {
     @Column(name = "is_correct", nullable = false)
     private boolean isCorrect;
 
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     private Question question;
 
