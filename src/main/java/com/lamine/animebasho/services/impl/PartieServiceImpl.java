@@ -5,6 +5,7 @@ import com.lamine.animebasho.entities.Partie;
 import com.lamine.animebasho.handler.PartieHandler;
 import com.lamine.animebasho.services.interfaces.PartieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class PartieServiceImpl implements PartieService {
     }
 
     @Override
-    public void enregistrerPartie(PartieDto partieDto) {
-
+    public ResponseEntity enregistrerPartie(PartieDto partieDto) {
+        return partieHandler.enregistrerPartie(partieDto);
     }
 }
