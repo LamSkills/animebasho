@@ -56,6 +56,8 @@ public class PartieHandler {
      * @return
      */
     public ResponseEntity enregistrerPartie(PartieDto partieDto) {
+        checkDuplicateAnswers(partieDto.getReponses());
+
         Partie partie = buildPartie(partieDto);
         Long partieId = partieDao.save(partie).getId();
 
@@ -70,8 +72,6 @@ public class PartieHandler {
     private Set<Reponse> preparerReponses(PartieDto partieDto, Partie partie) {
 
         Set<Reponse> reponses = new HashSet<>();
-
-        checkDuplicateAnswers(partieDto.getReponses());
 
         partieDto.getReponses().stream().forEach(propId -> {
             Proposition proposition = findPropositionById(propId);
