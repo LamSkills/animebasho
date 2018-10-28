@@ -29,6 +29,9 @@ public class PartieHandler {
     private QuizDao quizDao;
 
     @Autowired
+    private QuestionDao questionDao;
+
+    @Autowired
     private PropositionDao propositionDao;
 
     /**
@@ -64,6 +67,8 @@ public class PartieHandler {
 
         Set<Reponse> reponses = new HashSet<>();
 
+        checkDuplicateAnswers(partieDto.getReponses());
+
         partieDto.getReponses().stream().forEach(propId -> {
             Proposition proposition = findPropositionById(propId);
             reponses.add(new Reponse(partie, proposition));
@@ -72,6 +77,14 @@ public class PartieHandler {
         calculerScore(reponses, partie);
 
         return reponses;
+    }
+
+    private void checkDuplicateAnswers(List<String> reponses) {
+        List<Long> reponsesFormatees = formaterListeReponses(reponses);
+        Set<Question> questions = questionDao.findDuplicateAnswers(reponsesFormatees);
+        if (!questions.isEmpty()) {
+            throw new DuplicateAnswerException("Une seule réponse est possible par question !");
+        }
     }
 
     private List<Long> formaterListeReponses(List<String> reponses) {
