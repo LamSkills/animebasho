@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 @Component
 public class PartieHandler {
 
+    public static final String EXISTE_PAS = " n'existe pas !";
+
     @Autowired
     private PartieDao partieDao;
 
@@ -45,7 +47,7 @@ public class PartieHandler {
         return partieDao
                 .findPartieById(partieId)
                 .orElseThrow(() -> new DuplicateAnswerException(
-                        "La partie " + partieId + " n'existe pas !")
+                        "La partie " + partieId + EXISTE_PAS)
                 );
     }
 
@@ -111,7 +113,7 @@ public class PartieHandler {
         return propositionDao
                 .findById(Long.valueOf(propId))
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "La proposition " + propId + " n'existe pas !")
+                        "La proposition " + propId + EXISTE_PAS)
                 );
     }
 
@@ -120,12 +122,12 @@ public class PartieHandler {
         Utilisateur utilisateur = utilisateurDao
                 .findById(Long.valueOf(partieDto.getUserId()))
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "L'utilisateur " + partieDto.getUserId() + " n'existe pas !")
+                        "L'utilisateur " + partieDto.getUserId() + EXISTE_PAS)
                 );
         Quiz quiz = quizDao
                 .findById(Long.valueOf(partieDto.getQuizId()))
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Le quiz " + partieDto.getQuizId() + " n'existe pas !")
+                        "Le quiz " + partieDto.getQuizId() + EXISTE_PAS)
                 );
 
         partie.setUtilisateur(utilisateur);
