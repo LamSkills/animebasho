@@ -44,7 +44,7 @@ public class PartieHandler {
     public Partie retournerPartie(Long partieId) {
         return partieDao
                 .findPartieById(partieId)
-                .orElseThrow(() -> new EntityNotFoundException(
+                .orElseThrow(() -> new DuplicateAnswerException(
                         "La partie " + partieId + " n'existe pas !")
                 );
     }
