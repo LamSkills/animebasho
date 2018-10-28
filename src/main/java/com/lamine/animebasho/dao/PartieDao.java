@@ -6,8 +6,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface PartieDao extends CrudRepository<Partie, Long> {
-    @Query("select p from Partie p join fetch p.reponses rep where p.id = :id")
-    Partie findPartieById(@Param("id") Long id);
+    @Query("select p from Partie p where p.id = :id")
+    Optional<Partie> findPartieById(@Param("id") Long id);
 }

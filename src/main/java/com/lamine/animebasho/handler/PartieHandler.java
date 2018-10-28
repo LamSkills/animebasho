@@ -3,6 +3,7 @@ package com.lamine.animebasho.handler;
 import com.lamine.animebasho.dao.*;
 import com.lamine.animebasho.dto.PartieDto;
 import com.lamine.animebasho.entities.*;
+import com.lamine.animebasho.exceptions.DuplicateAnswerException;
 import com.lamine.animebasho.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,10 @@ public class PartieHandler {
      */
     public Partie retournerPartie(Long partieId) {
         return partieDao
-                .findPartieById(partieId);
+                .findPartieById(partieId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "La partie " + partieId + " n'existe pas !")
+                );
     }
 
     /**
