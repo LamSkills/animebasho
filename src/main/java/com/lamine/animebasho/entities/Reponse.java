@@ -1,6 +1,7 @@
 package com.lamine.animebasho.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,12 +11,13 @@ import java.util.Objects;
 @Table(name = "reponse")
 public class Reponse {
 
+    @JsonProperty("reponse")
     @EmbeddedId
     private ReponseId id;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "fk_partie_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_partie_id", insertable = false, updatable = false)
     private Partie partie;
 
     @ManyToOne
@@ -44,7 +46,8 @@ public class Reponse {
     @Override
     public String toString() {
         return "Reponse{" +
-                "id=" + id +
+                "partieId=" + id.getPartieId() +
+                "propositionId=" + id.getPropositionId() +
                 '}';
     }
 
@@ -62,6 +65,22 @@ public class Reponse {
 
         public ReponseId(Long partieId, Long propositionId) {
             this.partieId = partieId;
+            this.propositionId = propositionId;
+        }
+
+        public Long getPartieId() {
+            return partieId;
+        }
+
+        public void setPartieId(Long partieId) {
+            this.partieId = partieId;
+        }
+
+        public Long getPropositionId() {
+            return propositionId;
+        }
+
+        public void setPropositionId(Long propositionId) {
             this.propositionId = propositionId;
         }
 
