@@ -10,8 +10,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class PartieHandler {
@@ -49,34 +52,52 @@ public class PartieHandler {
         Partie partie = buildPartie(partieDto);
         Long partieId = partieDao.save(partie).getId();
 
-        buildReponsesAndCalculateScore(partieDto, partie);
+        Set<Reponse> reponses = preparerReponses(partieDto, partie);
+
         partieDao.save(partie);
 
         URI location = buildUrlResource(partieId);
         return ResponseEntity.created(location).build();
     }
 
-    private void buildReponsesAndCalculateScore(PartieDto partieDto, Partie partie) {
-        Set<Proposition> propositionsCorrectes = new HashSet<>();
-        Set<Proposition> propositions = new HashSet<>();
+    private Set<Reponse> preparerReponses(PartieDto partieDto, Partie partie) {
 
-        partieDto.getReponses().forEach(propId -> {
-            Proposition proposition = propositionDao
-                    .findById(Long.valueOf(propId))
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "La proposition " + propId + " n'existe pas !")
-                    );
+        Set<Reponse> reponses = new HashSet<>();
 
-            if (proposition.isCorrect()) {
-                propositionsCorrectes.add(proposition);
-            }
-            propositions.add(proposition);
-            Reponse reponse = new Reponse(partie, proposition);
+        partieDto.getReponses().stream().forEach(propId -> {
+            Proposition proposition = findPropositionById(propId);
+            reponses.add(new Reponse(partie, proposition));
         });
 
-        int score = propositionsCorrectes.size() / propositions.size() * 100;
+        calculerScore(reponses, partie);
 
-        partie.setScore(score + "%");
+        return reponses;
+    }
+
+    private List<Long> formaterListeReponses(List<String> reponses) {
+        return reponses
+                .stream()
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
+    }
+
+    private void calculerScore(Set<Reponse> reponses, Partie partie) {
+        double bonnesReponses = reponses
+                .stream()
+                .filter(reponse -> reponse.getProposition().isCorrect())
+                .count();
+
+        String score = (bonnesReponses / (double) reponses.size()) * 100 + "%";
+
+        partie.setScore(score);
+    }
+
+    private Proposition findPropositionById(String propId) {
+        return propositionDao
+                .findById(Long.valueOf(propId))
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "La proposition " + propId + " n'existe pas !")
+                );
     }
 
     private Partie buildPartie(PartieDto partieDto) {
