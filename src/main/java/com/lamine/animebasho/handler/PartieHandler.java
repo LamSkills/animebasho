@@ -61,7 +61,7 @@ public class PartieHandler {
         Partie partie = buildPartie(partieDto);
         Long partieId = partieDao.save(partie).getId();
 
-        Set<Reponse> reponses = preparerReponses(partieDto, partie);
+        preparerReponses(partieDto, partie);
 
         partieDao.save(partie);
 
@@ -69,7 +69,7 @@ public class PartieHandler {
         return ResponseEntity.created(location).build();
     }
 
-    private Set<Reponse> preparerReponses(PartieDto partieDto, Partie partie) {
+    private void preparerReponses(PartieDto partieDto, Partie partie) {
 
         Set<Reponse> reponses = new HashSet<>();
 
@@ -79,8 +79,6 @@ public class PartieHandler {
         });
 
         calculerScore(reponses, partie);
-
-        return reponses;
     }
 
     private void checkDuplicateAnswers(List<String> reponses) {
